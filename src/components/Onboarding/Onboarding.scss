@@ -1,0 +1,249 @@
+.Onboarding {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-image: url("/images/ob-bg.png");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  background-color: #53b7f6;
+}
+
+.Onboarding__content {
+  padding: calc(
+      var(--tg-content-safe-area-inset-top, 0px) +
+        var(--tg-safe-area-inset-top, 0px) + var(--extra-top-pad, 0px)
+    )
+    calc(
+      var(--tg-content-safe-area-inset-right, 0px) +
+        var(--tg-safe-area-inset-right, 0px) + 17px
+    )
+    calc(
+      var(--tg-content-safe-area-inset-bottom, 0px) +
+        var(--tg-safe-area-inset-bottom, 0px) + 30px
+    )
+    calc(
+      var(--tg-content-safe-area-inset-left, 0px) +
+        var(--tg-safe-area-inset-left, 0px) + 17px
+    );
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Onboarding__content-topBlock {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 17px;
+}
+
+.topBlock-text {
+  width: 100%;
+  font-family: "MTSWide";
+
+  text-transform: uppercase;
+  color: #ffffff;
+  font-size: 25.5px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.left {
+  text-align: start;
+}
+
+.right {
+  text-align: end;
+}
+
+.topBlock-subtext {
+  width: 100%;
+  font-family: "MTSWide";
+
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+  font-size: 13.47px;
+  line-height: 1;
+  letter-spacing: 0;
+  margin-top: 9px;
+}
+
+.Onboarding__content-botBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.botBlock-wrap {
+  padding: 0 12px;
+}
+
+.botBlock-list {
+  width: 100%;
+  font-family: "MTSText";
+
+  // max-width: 335px;
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 16px;
+  gap: 10px;
+  font-size: 16px;
+  // line-height: 127%;
+  letter-spacing: 0;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.botBlock-list ul {
+  padding-left: 30px;
+  margin: 0;
+  list-style: disc outside;
+}
+
+.botBlock-list li {
+   margin: 0; 
+   line-height: 127%;
+}
+
+.botBlock-list li + li {
+  margin-top: 5px;      
+}
+
+.continue {
+  color: #ffffff;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 127%;
+  text-align: center;
+  width: 100%;
+  max-width: 310px;
+  margin-bottom: 16px;
+}
+
+.continue-link {
+  color: #ffffff;
+}
+
+.button {
+  width: 100%;
+  max-width: 359px;
+  height: 56px;
+  background-color: #ff0032;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 127%;
+  letter-spacing: 0;
+  text-align: center;
+  border-radius: 100px;
+  border: none;
+}
+
+.botBlock-btnBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 9px;
+}
+
+.botBlock-text {
+  width: 100%;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 127%;
+  letter-spacing: 0;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 17px;
+}
+
+.botBlock-topText {
+  // width: 100%;
+  font-family: "MTSWide";
+
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 127%;
+  letter-spacing: 0;
+  margin-bottom: 13px;
+}
+
+.Onboarding__loadingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  pointer-events: all;
+}
+
+.Onboarding__spinner {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  animation: onboarding-spin 1s linear infinite;
+}
+
+@keyframes onboarding-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.modal-ul {
+  font-size: 16px;
+  font-family: "MTSText";
+  line-height: 1;
+  letter-spacing: 0;
+  list-style: disc;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-li {
+  margin: 0;
+}
+
+.modal-em {
+  font-weight: 700;
+}
+
+
+.modal-custom-p {
+  font-family: "MTSText";
+
+}
+
+.botBlock-whitebox {
+  width: 100%;
+  height: auto;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.botBlock-wb-text {
+  font-family: "MTSText";
+font-size: 16px;
+line-height: 127%;
+letter-spacing: 0;
+color: #000000;
+padding: 0 12px;
+}

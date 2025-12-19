@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* border: 1px solid red; */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  font-family: "MTSText";
+
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --tg-content-safe-area-inset-top: 0px;
+  --tg-content-safe-area-inset-right: 0px;
+  --tg-content-safe-area-inset-bottom: 0px;
+  --tg-content-safe-area-inset-left: 0px;
+
+  --tg-safe-area-inset-top: 0px;
+  --tg-safe-area-inset-right: 0px;
+  --tg-safe-area-inset-bottom: 0px;
+  --tg-safe-area-inset-left: 0px;
+
+  --extra-top-pad: 20px;
+}
+
+#root {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  height: 100%;
+  
+
+
+  background-image: url("/images/bg-friends.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+body,
+html {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 100%;
+  overscroll-behavior-y: none;
+  background-color: #FFFFFF;
+}
+
+body {
+  position: relative;
+  overflow: hidden;
+  
+}
+
+ul,
+ol,
+p,
+div,
+label,
+h1,
+h2,
+h3 {
+  list-style: none;
+}
+
+

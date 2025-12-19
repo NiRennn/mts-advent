@@ -1,0 +1,59 @@
+.btn {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  user-select: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 100px;
+  width: 100%;
+  height: 56px;
+  padding: 10px;
+
+
+  font-size: 18px;
+  line-height: 127%;
+  letter-spacing: 0;
+
+  transition: transform .06s ease, opacity .15s ease, filter .15s ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &:active { transform: scale(0.99); }
+  &:disabled { cursor: not-allowed; opacity: .55; }
+}
+
+.btn--full { width: 100%; }
+
+
+
+.btn--primary {
+  background: #FF0032;
+  color: #FFFFFF;
+}
+
+.btn--secondary {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: #111;
+}
+
+.btn__spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  animation: btnSpin .8s linear infinite;
+  opacity: .9;
+}
+
+@keyframes btnSpin {
+  to { transform: rotate(360deg); }
+}
