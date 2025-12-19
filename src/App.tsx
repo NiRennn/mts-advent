@@ -4,13 +4,15 @@ import "./App.scss";
 import appRoutes from "./routes/routes";
 import Onboarding from "./components/Onboarding/Onboarding";
 import Game from "./components/Game/Game";
+import { useTelegramUiSetup } from "./hooks/useTelegramUiSetup";
 
 
 function AppRoutes() {
+    useTelegramUiSetup();
     const navigate = useNavigate();
 
   useEffect(() => {
-    window.Telegram.WebApp.ready();
+    // window.Telegram.WebApp.ready();
     navigate(appRoutes.ONBOARDING, { replace: true });
   }, []);
 
