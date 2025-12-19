@@ -12,7 +12,7 @@ type ModalProps = {
   children?: React.ReactNode;
   footer?: React.ReactNode;
   className?: string;
-
+ 
   closeOnOverlayClick?: boolean;
   lockScroll?: boolean;
 

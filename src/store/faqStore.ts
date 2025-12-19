@@ -18,7 +18,6 @@ type FaqStore = {
   fetchFaq: (userId: number) => Promise<void>;
 };
 
-
 const FAQ_ENDPOINT = "https://mts-advent-25.despbots.ru/api/faq/";
 
 export const useFaqStore = create<FaqStore>((set, get) => ({
@@ -44,7 +43,10 @@ export const useFaqStore = create<FaqStore>((set, get) => ({
 
       const res = await fetch(url.toString(), {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: tg?.initData,
+        },
       });
 
       const raw: any = await res.json().catch(() => null);
@@ -53,9 +55,10 @@ export const useFaqStore = create<FaqStore>((set, get) => ({
         throw new Error(raw?.detail ?? raw?.message ?? `HTTP ${res.status}`);
       }
 
-      const items: FaqItemApi[] =
-        Array.isArray(raw?.data?.faq_questions) ? raw.data.faq_questions
-        : Array.isArray(raw?.data) ? raw.data
+      const items: FaqItemApi[] = Array.isArray(raw?.data?.faq_questions)
+        ? raw.data.faq_questions
+        : Array.isArray(raw?.data)
+        ? raw.data
         : [];
 
       set({

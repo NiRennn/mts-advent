@@ -88,14 +88,11 @@
 .botBlock-list {
   width: 100%;
   font-family: "MTSText";
-
-  // max-width: 335px;
   background-color: #ffffff;
   padding: 16px;
   border-radius: 16px;
   gap: 10px;
   font-size: 16px;
-  // line-height: 127%;
   letter-spacing: 0;
   color: #000000;
   margin-bottom: 20px;
@@ -108,12 +105,12 @@
 }
 
 .botBlock-list li {
-   margin: 0; 
-   line-height: 127%;
+  margin: 0;
+  line-height: 127%;
 }
 
 .botBlock-list li + li {
-  margin-top: 5px;      
+  margin-top: 5px;
 }
 
 .continue {
@@ -190,8 +187,8 @@
 }
 
 .Onboarding__spinner {
-  width: 124px;
-  height: 124px;
+  width: 30%;
+  // height: 124px;
   border-radius: 50%;
   animation: onboarding-spin 1s linear infinite;
 }
@@ -216,22 +213,22 @@
 
 .modal-li {
   margin: 0;
+  color: #464646;
 }
 
 .modal-em {
   font-weight: 700;
+  color: #000000;
 }
-
 
 .modal-custom-p {
   font-family: "MTSText";
-
 }
 
 .botBlock-whitebox {
   width: 100%;
   height: auto;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -241,9 +238,59 @@
 
 .botBlock-wb-text {
   font-family: "MTSText";
-font-size: 16px;
-line-height: 127%;
-letter-spacing: 0;
-color: #000000;
-padding: 0 12px;
+  font-size: 16px;
+  line-height: 127%;
+  letter-spacing: 0;
+  color: #000000;
+  padding: 0 12px;
+}
+
+@media (max-width: 400px) {
+  .topBlock-text {
+    font-size: 20px;
+  }
+
+  .topBlock-subtext {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 370px) {
+  .botBlock-list {
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .continue {
+    font-size: 14px;
+  }
+
+  .continue-link {
+    font-size: 14px;
+  }
+
+  .botBlock-wrap {
+    padding: 0 6px;
+  }
+
+  .botBlock-text {
+    font-size: 20px;
+    margin-bottom: 6px;
+    margin-top: 1px;
+  }
+
+  .botBlock-wb-text {
+  font-size: 14px;
+  padding: 0 10px;
+}
+
+.modal-ul {
+  font-size: 14px;
+  padding-left: 16px;
+  gap: 6px;
+}
+
+
 }

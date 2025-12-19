@@ -1,5 +1,12 @@
 import "./Onboarding.scss";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, useCallback } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import Modal from "../Modal/Modal";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +26,8 @@ export default function Onboarding() {
   const navigate = useNavigate();
 
   // VITE_API_ORIGIN=https://mts-advent-25.despbots.ru
-  const API_ORIGIN = import.meta.env.VITE_API_ORIGIN ?? "https://mts-advent-25.despbots.ru";
+  const API_ORIGIN =
+    import.meta.env.VITE_API_ORIGIN ?? "https://mts-advent-25.despbots.ru";
   const JOIN_URL = `${API_ORIGIN}/api/enter-red/`;
 
   const [open, setOpen] = useState(false);
@@ -34,6 +42,19 @@ export default function Onboarding() {
   const hydrateFromTelegram = useTgStore((s) => s.hydrateFromTelegram);
   // const tg = useTgStore((s) => s.tg);
   const userDataTg = useTgStore((s) => s.userDataTg);
+
+  // const DEV_HARDCODE_USER = {
+  //   id: 783751626,
+  //   first_name: "Кост",
+  //   last_name: "",
+  //   username: "Deadly_Harlequine",
+  //   utm_mark: "",
+  // } as const;
+
+  const effectiveUser = useMemo(() => {
+    if (userDataTg?.id) return userDataTg;
+    return import.meta.env.DEV ? userDataTg : null;
+  }, [userDataTg]);
 
   // const getEffectiveUserId = (): number | null => {
   //   try {
@@ -57,11 +78,12 @@ export default function Onboarding() {
   // const effectiveUserId = useMemo(() => {
   //   const idFromTg = Number(tg?.initDataUnsafe?.user?.id);
   //   if (Number.isFinite(idFromTg) && idFromTg > 0) return idFromTg;
-  
+
   //   return 783751626;
   // }, [tg]);
 
   const [joinLoading, setJoinLoading] = useState(false);
+  const joinRequestedRef = useRef(false);
 
   const closeModal = useCallback(() => {
     setOpen(false);
@@ -78,18 +100,7 @@ export default function Onboarding() {
   }, [hydrateFromTelegram]);
 
   useEffect(() => {
-    // const effectiveUserId = 783751626;
-    // const effectiveFirstName = "Кост";
-    // const effectiveLastName = "";
-    // const effectiveUsername = "Deadly_Harlequine";
-    // const effectiveInitData =
-    //   "user=%7B%22id%22%3A783751626%2C%22first_name%22%3A%22%D0%9A%D0%BE%D1%81%D1%82%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22Deadly_Harlequine%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2Fl0kw4w0I95ZbMH8JAdPx3NfQwh1NpMo80TLCuNUWD38.svg%22%7D&chat_instance=4806822834290104952&chat_type=private&auth_date=1766064066&signature=...&hash=...";
-    //
-    // const hardcodedUser = {
-    //   id: effectiveUserId,
-    //   first_name: effectiveFirstName,
-    //   last_name: effectiveLastName,
-    //   username: effectiveUsername,
+
 
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -100,24 +111,21 @@ export default function Onboarding() {
 
     let shouldGoGame = false;
 
-    const fetchUserData = async () => {
-      if (!userDataTg?.id) {
-        console.error("Telegram user is missing (tg.initDataUnsafe.user).");
-        shouldGoGame = false;
-        return;
-      }
+      const fetchUserData = async () => {
+    if (!userDataTg?.id) {
+      console.error("Telegram user is missing (tg.initDataUnsafe.user).");
+      shouldGoGame = false;
+      return;
+    }
 
-      // const tg = window.Telegram.WebApp;
-      // const userDataTg = tg.initDataUnsafe.user;
-      //
-      // ServerConnect.getUser({
-      //   url: 'users',
-      //   user_firstname: userDataTg.first_name,
-      //   user_id: userDataTg.id,
-      //   user_lastname: userDataTg.last_name ? userDataTg.last_name : '',
-      //   user_username: userDataTg.username ? userDataTg.username : '',
-      //   utm_mark: typeof tg.initDataUnsafe.start_param === 'undefined' ? '' : tg.initDataUnsafe.start_param,
-      // })
+    //hard
+    // const fetchUserData = async () => {
+    //   if (!effectiveUser?.id) {
+    //     console.error("Telegram user is missing (tg.initDataUnsafe.user).");
+    //     shouldGoGame = false;
+    //     return;
+    //   }
+      //hard
 
       const response = await ServerConnect.getUser({
         url: "users",
@@ -127,6 +135,17 @@ export default function Onboarding() {
         user_username: userDataTg.username ? userDataTg.username : "",
         utm_mark: userDataTg.utm_mark,
       });
+
+      //hard
+      // const response = await ServerConnect.getUser({
+      //   url: "users",
+      //   user_firstname: effectiveUser.first_name,
+      //   user_id: effectiveUser.id,
+      //   user_lastname: effectiveUser.last_name ? effectiveUser.last_name : "",
+      //   user_username: effectiveUser.username ? effectiveUser.username : "",
+      //   utm_mark: (effectiveUser as any).utm_mark ?? "",
+      // });
+      //hard
 
       if (cancelled) return;
 
@@ -170,7 +189,11 @@ export default function Onboarding() {
       cancelled = true;
       document.body.style.overflow = prevOverflow;
     };
-  }, [navigate, setApi, userDataTg]);
+    }, [navigate, setApi, userDataTg]);
+
+    //hard
+  // }, [navigate, setApi, effectiveUser]);
+  //hard
 
   // useEffect(() => {
   //   const hardcodedUser = {
@@ -179,41 +202,41 @@ export default function Onboarding() {
   //     last_name: "",
   //     username: "Deadly_Harlequine",
   //   };
-  //
+  
   //   const prevOverflow = document.body.style.overflow;
   //   document.body.style.overflow = "hidden";
-  //
+  
   //   const controller = new AbortController();
   //   let cancelled = false;
-  //
+  
   //   const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
   //   const user = tg?.initDataUnsafe?.user ?? hardcodedUser;
-  //
+  
   //   const fetchUserData = async () => {
   //     if (!user?.id) return;
-  //
+  
   //     const url = new URL("https://mts-advent-25.despbots.ru/api/users/");
   //     url.searchParams.set("user_id", String(user.id));
   //     url.searchParams.set("user_firstname", hardcodedUser.first_name);
-  //
+  
   //     const response = await fetch(url.toString(), {
   //       method: "GET",
   //       headers: { "Content-Type": "application/json" },
   //       signal: controller.signal,
   //     });
-  //
+  
   //     const raw = await response.json().catch(() => null);
   //     if (!response.ok) throw new Error(`GET ${url} → HTTP ${response.status}`);
-  //
+  
   //     const payload =
   //       raw && typeof raw === "object" && raw.result === "ok" && raw.data
   //         ? raw.data
   //         : raw;
-  //
+  
   //     setApi(payload);
   //     if (!cancelled) setUserInfo(payload);
   //   };
-  //
+  
   //   (async () => {
   //     try {
   //       await Promise.all([sleep(3000), fetchUserData()]);
@@ -224,7 +247,7 @@ export default function Onboarding() {
   //       if (!cancelled) setPageLoading(false);
   //     }
   //   })();
-  //
+  
   //   return () => {
   //     cancelled = true;
   //     controller.abort();
@@ -232,8 +255,10 @@ export default function Onboarding() {
   //   };
   // }, [tg, setApi]);
 
-  const sendJoinRequest = useCallback(async () => {
-    if (!userDataTg?.id || joinLoading) return;
+  const sendJoinRequest = useCallback(async (): Promise<boolean> => {
+    if (!effectiveUser?.id || joinLoading) return false;
+
+    if (joinRequestedRef.current) return true;
 
     setJoinLoading(true);
     try {
@@ -244,12 +269,11 @@ export default function Onboarding() {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: tg?.initData ?? "",
         },
         redirect: "follow",
         referrerPolicy: "no-referrer",
         body: JSON.stringify({
-          user_id: userDataTg.id,
+          user_id: effectiveUser.id,
         }),
       });
 
@@ -259,30 +283,45 @@ export default function Onboarding() {
         throw new Error(data?.detail ?? data?.message ?? `HTTP ${res.status}`);
       }
 
-      closeModal();
-      navigate(appRoutes.GAME);
+      joinRequestedRef.current = true;
+
+      return true;
     } catch (e) {
       console.error("POST join error:", e);
       alert("Не удалось отправить запрос. Попробуй ещё раз.");
+
+      joinRequestedRef.current = false;
+
+      return false;
     } finally {
       setJoinLoading(false);
     }
-  }, [JOIN_URL, closeModal, joinLoading, navigate, userDataTg?.id]);
+  }, [JOIN_URL, effectiveUser?.id, joinLoading]);
+
+  useEffect(() => {
+    joinRequestedRef.current = false;
+  }, [effectiveUser?.id]);
 
   useLayoutEffect(() => {
     if (pageLoading) return;
     const scope = rootRef.current;
     if (!scope) return;
 
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    const reduce = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)"
+    )?.matches;
     if (reduce) return;
 
     const q = gsap.utils.selector(scope);
 
     const top = q(".Onboarding__content-topBlock > *");
 
-    const listTargets = q(".botBlock-wrap, .continue, .Onboarding__content-botBlock button");
-    const questionTargets = q(".botBlock-whitebox, .botBlock-text, .botBlock-btnBlock");
+    const listTargets = q(
+      ".botBlock-wrap, .continue, .Onboarding__content-botBlock button"
+    );
+    const questionTargets = q(
+      ".botBlock-whitebox, .botBlock-text, .botBlock-btnBlock"
+    );
     const targets = step === "list" ? listTargets : questionTargets;
 
     const ctx = gsap.context(() => {
@@ -320,8 +359,10 @@ export default function Onboarding() {
           title: "Становись абонентом тарифа МТС RED, чтобы принять участие ",
           body: (
             <p>
-              В тариф входит безлимитный интернет, 1000 минут и смс, а также технологии Voicetech от МТС. <br />
-              Подключай тариф МТС RED, возвращайся в адвент и получи шанс выиграть крутые призы!
+              В тариф входит безлимитный интернет, 1000 минут и смс, а также
+              технологии Voicetech от МТС. <br />
+              Подключай тариф МТС RED, возвращайся в адвент и получи шанс
+              выиграть крутые призы!
             </p>
           ),
           footer: (
@@ -366,8 +407,14 @@ export default function Onboarding() {
             </ul>
           ),
           footer: (
-            <Button variant="primary" onClick={sendJoinRequest}>
-              {joinLoading ? "Отправляем..." : "Мне повезёт!"}
+            <Button
+              variant="primary"
+              onClick={() => {
+                closeModal();
+                navigate(appRoutes.GAME);
+              }}
+            >
+              Мне повезёт!
             </Button>
           ),
         };
@@ -375,12 +422,16 @@ export default function Onboarding() {
       default:
         return { title: "", body: null, footer: null };
     }
-  }, [closeModal, joinLoading, modalType, sendJoinRequest]);
+  }, [closeModal, navigate, modalType]);
 
   if (pageLoading) {
     return (
       <div className="Onboarding" ref={rootRef}>
-        <div className="Onboarding__loadingOverlay" role="status" aria-label="Загрузка">
+        <div
+          className="Onboarding__loadingOverlay"
+          role="status"
+          aria-label="Загрузка"
+        >
           <img src="/icons/loader.svg" alt="" className="Onboarding__spinner" />
         </div>
       </div>
@@ -401,9 +452,13 @@ export default function Onboarding() {
             <div className="botBlock-wrap">
               <div className="botBlock-list">
                 <ul>
-                  <li>Открывай новую дату каждый день и участвуй в розыгрыше.</li>
+                  <li>
+                    Открывай новую дату каждый день и участвуй в розыгрыше.
+                  </li>
                   <li>В окошках прошедших дней — результаты и победители </li>
-                  <li>Детали о розыгрыше — в знаке вопроса в правом верхнем углу.</li>
+                  <li>
+                    Детали о розыгрыше — в знаке вопроса в правом верхнем углу.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -437,7 +492,9 @@ export default function Onboarding() {
         ) : (
           <div className="Onboarding__content-botBlock" key={step}>
             <div className="botBlock-whitebox">
-              <p className="botBlock-wb-text">Розыгрыш проводится среди абонентов тарифа МТС RED</p>
+              <p className="botBlock-wb-text">
+                Розыгрыш проводится среди абонентов тарифа МТС RED
+              </p>
               <Button variant="primary">Подключить тариф</Button>
             </div>
 
@@ -453,9 +510,16 @@ export default function Onboarding() {
 
               <Button
                 variant="secondary"
-                onClick={() => openModal("yesRed")}
-                disabled={!userDataTg?.id}
-                title={!userDataTg?.id ? "Нет данных Telegram пользователя" : undefined}
+                onClick={async () => {
+                  const ok = await sendJoinRequest();
+                  if (ok) openModal("yesRed");
+                }}
+                disabled={!effectiveUser?.id || joinLoading}
+                title={
+                  !effectiveUser?.id
+                    ? "Нет данных Telegram пользователя"
+                    : undefined
+                }
               >
                 Конечно!
               </Button>
